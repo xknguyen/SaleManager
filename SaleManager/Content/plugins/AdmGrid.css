@@ -1,0 +1,41 @@
+﻿body {
+}
+
+
+.td_toggle .toggle {
+    width: 32px;
+    height: 32px;
+    border: none;
+    margin-left: 12px;
+    background: url(../Images/delete.png) no-repeat;
+    cursor: pointer;
+}
+
+.td_toggle .readonly {
+    cursor: default;
+}
+
+.td_toggle .true {
+    background-image: url(../Images/ok.png);
+}
+
+.pagination-container {
+    display: inline-block;
+}
+
+.pagination {
+    margin: 0;
+}
+#categories .dd-item >button {
+    font-family: FontAwesome;
+    height: 34px;
+    width: 33px;
+    color: #1ab394;
+}
+#categories .dd-item >button:before {
+    content: "\f054";
+}
+
+#categories .dd-item >button[data-action="collapse"]:before {
+    content: "\f078";
+}

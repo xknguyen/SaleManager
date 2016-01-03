@@ -1,0 +1,27 @@
+﻿#AddUserContent .col-md-12{
+    padding: 0;
+}
+
+#addUserForm .modal-dialog {
+    width: 80%;
+}
+
+#tblUsers .selected {
+    background: #D1D1DE;
+}
+
+#tblUsers > tbody>tr {
+    cursor: pointer;
+}
+
+#AddUserContent {
+    padding: 0; 
+}
+
+#AddUserContent >.row {
+    margin: 0;
+}
+
+#AddUserContent .ibox{
+    margin: 0;
+}

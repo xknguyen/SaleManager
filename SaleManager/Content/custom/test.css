@@ -1,0 +1,104 @@
+﻿#testForm .tab-li {
+    width: 50%
+}
+#testForm li > a {
+    margin-right: 0;
+}
+#testForm .tab-content {
+    padding: 5px;
+    border: #dddddd;
+    border-width: 1px;
+    border-top: 0;
+    border-style: solid;
+    margin-bottom: 10px;
+}
+#testContent {
+    min-height: 512px;
+    padding: 10px;
+}
+#testForm li.active {
+    background-color: #F9F9F9;
+}
+#testInfo {
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.order-button {
+    display: block;
+    height: 15px;
+}
+#testContent .ibox-title {
+    border-style: none;
+}
+#choiceQuestionForm .modal-dialog {
+    width: 95%;
+    margin: 40px auto;
+}
+.form-header {
+    height: 450px;
+    background: #fff;
+}
+
+.tree-view-groups {
+    overflow: auto;height: 416px;
+}
+.form-body,.form-body{
+    height:450px;
+}
+#questionDiv .ibox-content {
+    height:402px;
+    overflow: auto;
+}
+
+.groupColumn {
+    width: 150px;
+}
+
+.selected {
+    background-color:#CBDDFF
+}
+
+#scoreQuestionForm .modal-body {
+    background: white;
+}
+#questionDetailList .control-label {
+    text-align: left;
+}
+
+.detail-score {
+    width: 100px;
+}
+
+#choiceQuestionForm .modal-header {
+    padding: 15px;
+}
+
+#choiceQuestionForm .modal-body {
+    padding: 0 15px;
+}
+
+#testScore {
+    width: 60px;
+    display: inline;
+    height: 22px;
+    padding: 0;
+    padding-left: 5px;
+}
+#divideScore {
+    color: white;
+}
+#scoreQuestionForm .modal-body {
+    padding: 15px;
+}
+
+#scoreQuestionForm .i-box {
+    margin-bottom: 0;
+}
+#scoreQuestionForm .tbldata {
+    margin-bottom: 0;
+}
+#scoreQuestionForm .ibox-content {
+    height: 400px;
+    overflow: auto;
+}
