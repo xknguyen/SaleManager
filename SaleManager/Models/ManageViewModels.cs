@@ -41,20 +41,21 @@ namespace SaleManager.Models
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [StringLength(100, ErrorMessage = "{0} ngắn nhất là 6 ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Mật khẩu cũ")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Mật khẩu không được để trống")]
+        [StringLength(100, ErrorMessage = "{0} ngắn nhất là 6 ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
-        public string NewPassword { get; set; }
+        [Display(Name = "Mật khẩu mới")]
+        public string Password { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng xác thực lại mật khẩu")]
+        [Display(Name = "Nhập lại mật khẩu mới")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
         public string ConfirmPassword { get; set; }
     }
 

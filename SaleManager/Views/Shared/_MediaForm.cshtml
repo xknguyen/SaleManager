@@ -1,0 +1,81 @@
+﻿<a class="btn btn-primary hidden" data-target="#mediaForm" data-toggle="modal" href="" id="showMediaForm"></a>
+<div class="modal inmodal" id="mediaForm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h3>File Manager</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3 file-header scroll">
+                            <div id="treeviewFolder"></div>
+                        </div>
+                        <div class="col-md-9 file-body">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Danh sách tập tin</h5>
+                                    <div class="ibox-tools ">
+                                        @(Html.Bootstrap()
+                                              .ActionLink("Tạo thư mục", "")
+                                              .Class("btn btn-success btn-xs")
+                                              .Id("createFolder")
+                                              .PrependIcon("fa fa-folder"))
+                                        @(Html.Bootstrap()
+                                              .ActionLink("Xóa thư mục", "")
+                                              .Class("btn btn-danger btn-xs")
+                                              .Id("deleteFolder")
+                                              .PrependIcon("fa fa-trash-o"))
+                                        @(Html.Bootstrap()
+                                              .ActionLink("Upload", "")
+                                              .Class("btn btn-primary btn-xs")
+                                              .Id("showUploadFile")
+                                              .PrependIcon("fa fa-upload"))
+                                    </div>
+                                </div>
+                                <div class="ibox-content p-sm">
+                                    <div class="row animated hidden" id="newFolderBox">
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="text" name="newFolderName" id="newFolderName" placeholder="Nhập tên thư mục">
+                                        </div>
+                                        <div class="col-md-2" style="padding-top: 7px;">
+                                            <a class="btn btn-success btn-xs" id="addNewFolder"><i class="fa fa-plus"></i> Thêm</a>
+                                            <a class="btn btn-danger btn-xs" id="cancelNewFolder"><i class="fa fa-minus"></i> Hủy</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row animated hidden" id="uploadBox">
+                                        <div class="col-md-10">
+                                            <form enctype="multipart/form-data" id="frmCreatePic">
+                                                <input type="hidden" name="pictureFolder" id="pictureFolder"/>
+                                                <input class="form-control" type="file" name="newFolderName" id="uploadFile" placeholder="Nhập tên thư mục" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-2" style="padding-top: 7px;">
+                                            <a class="btn btn-success btn-xs" id="uploadButton"><i class="fa fa-plus"></i> Upload</a>
+                                            <a class="btn btn-danger btn-xs" id="cancelUpload"><i class="fa fa-minus"></i> Hủy</a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 scroll file-content" id="fileContent">
+
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="selectMediaButton" style="margin: 5px">Lưu</button>
+                <button type="button" class="btn btn-danger" id="closeMediaButton" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hidden" id="fileBoxTemp">
+    @Html.Partial("_FileBox")
+</div>

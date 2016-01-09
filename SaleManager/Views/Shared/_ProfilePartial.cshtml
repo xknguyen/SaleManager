@@ -1,0 +1,40 @@
+﻿@{
+    var img = "~/Images/noavatar.png";
+}
+<div class="dropdown profile-element">
+    <span>
+        <img class="img-circle" style="width:70px;max-width:70px; max-height:70px"
+             src="@Url.Content(img)"
+             alt="Họ và tên" />
+    </span>
+    <a data-toggle="dropdown" class="dropdown-toggle"
+       href="">
+        <span class="clear">
+            <span class="block m-t-xs">
+                <strong>@(ViewBag.Account.Profile.FullName)</strong>
+            </span>
+            <span class="text-muted text-xs block">
+                <b class="caret"></b>
+            </span>
+        </span>
+    </a>
+
+    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+        <li>
+            <a href="@Url.Action("Index", "Home", new {area=  ""})">Trang chủ</a>
+        </li>
+        <li>
+            <a href="@Url.Action("ChangePassword","Manage", new {area=  ""})">Đổi mật khẩu</a>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">
+                Đăng xuất
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="logo-element">
+    SS
+</div>

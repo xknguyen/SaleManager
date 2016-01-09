@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Total = 0;
+}
+<nav class="navbar navbar-static-top"
+     role="navigation" style="margin-bottom: 0;">
+    <div class="navbar-header">
+        <a href="#" class="navbar-minimalize minimalize-styl-2 btn btn-primary" id="navbar-button">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <!-- Hộp thông báo, link đăng xuất -->
+    <ul class="nav navbar-top-links navbar-right">
+        <li>
+            <!-- Lời chào tới người dùng -->
+            <span class="m-r-sm text-muted welcome-message">
+                Xin chào <strong>@(ViewBag.Account.Profile.FullName)</strong>
+            </span>
+        </li>
+        <!--Chuông thông báo-->
+        <li>
+            <a class="dropdown-toggle count-info" href="#" data-toggle="dropdown">
+                <i class="fa fa-bell"></i>
+                <span class="label label-primary">@(ViewBag.Total)</span>
+            </a>
+            <ul class="dropdown-menu dropdown-alerts">
+                @if (ViewBag.Total == 0)
+                {
+                    <li>
+                        <div class="text-center link-block">
+                            <a href="#">
+                                <strong>Bạn không có thông báo mới</strong>
+                            </a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Order", new {TypeSearch = 1})">
+                            <div>
+                                <i class="fa fa-envelope fa-fw"></i> Có 0 đơn hàng mới
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+        <li>
+            @using (Html.BeginForm("LogOff", "Account", new { area = "" },
+                FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+                
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    <i class="fa fa-sign-out"></i>
+                    <strong>Đăng xuất</strong>
+                </a>
+            }
+        </li>
+    </ul>
+</nav>
