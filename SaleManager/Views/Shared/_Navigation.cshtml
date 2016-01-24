@@ -4,56 +4,99 @@
             <li class="nav-header">
                 @Html.Partial("_ProfilePartial")
             </li>
+
             <li>
                 <a href="@Url.Action("Index", "Home", new {area = ""})">
                     <i class="fa fa-th-large"></i>
                     <span class="nav-label">Trang chủ</span>
                 </a>
             </li>
-            @if (ViewBag.Roles.Contains("Admin"))
-            {
-                <li>
-                    <a href="#">
-                        <i class="fa fa-users"></i>
-                        <span class="nav-label">Quản lý người dùng</span>
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            @Html.ActionLink("Xem tất cả", "Index", "Account")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Danh sách giáo viên", "Index", "Account")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Danh sách học sinh", "Index", "Account")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Tạo tài khoản mới", "Create", "Account")
-                        </li>
-                    </ul>
-                </li>
-            }
-            <!--Các chức năng liên quan tới người dùng-->
-            
-            <!--Các chức năng liên quan tới khóa học-->
+
             <li>
                 <a href="#">
-                    <i class="fa fa-building-o"></i>
-                    <span class="nav-label">Quản lý khóa học</span>
+                    <i class="fa fa-users"></i>
+                    <span class="nav-label">Quản lý khách hàng</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        @Html.ActionLink("Xem tất cả", "Index", "Course")
+                        @Html.ActionLink("Xem tất cả", "Index", "Customer")
                     </li>
                     <li>
-                        @(Html.Bootstrap().ActionLink("Thêm khóa học mới", "Create", "Course"))
+                        @Html.ActionLink("Tạo khách hàng mới", "Create", "Customer")
                     </li>
                 </ul>
             </li>
 
-            @*<li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-building-o"></i>
+                    <span class="nav-label">Quản lý danh mục</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem tất cả", "Index", "Category")
+                    </li>
+                    <li>
+                        @(Html.Bootstrap().ActionLink("Thêm danh mục mới", "Create", "Category"))
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa fa-building-o"></i>
+                    <span class="nav-label">Quản lý sản phẩm</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem tất cả", "Index", "Product")
+                    </li>
+                    <li>
+                        @(Html.Bootstrap().ActionLink("Thêm sản phẩm mới", "Create", "Product"))
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa fa-building-o"></i>
+                    <span class="nav-label">Quản lý nhà cung cấp</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem tất cả", "Index", "Supplier")
+                    </li>
+                    <li>
+                        @(Html.Bootstrap().ActionLink("Thêm nhà cung cấp mới", "Create", "Supplier"))
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa fa-building-o"></i>
+                    <span class="nav-label">Quản lý hóa đơn</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem tất cả", "Index", "Order")
+                    </li>
+                    <li>
+                        @(Html.Bootstrap().ActionLink("Thêm hóa đơn mới mới", "Create", "Order"))
+                    </li>
+
+                    <li>
+                        @(Html.Bootstrap().ActionLink("Xem công nợ", "Create", "Order"))
+                    </li>
+                </ul>
+            </li>
+
+            <li>
                 <a href="#">
                     <i class="fa fa-gear"></i>
                     <span class="nav-label">Tùy chỉnh</span>
@@ -64,7 +107,7 @@
                         @Html.ActionLink("Thiết lập trang", "Index", "Settings")
                     </li>
                 </ul>
-            </li>*@
+            </li>
         </ul>
     </div>
 </nav>

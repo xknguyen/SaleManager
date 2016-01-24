@@ -72,7 +72,7 @@ namespace SaleManager.Models
 
         [Required(ErrorMessage = "{0} không được để trống")]
         [DisplayName("Mã danh mục")]
-        public int CategoryId { get; set; }
+        public long CategoryId { get; set; }
 
         [DisplayName("Trạng thái")]
         public bool Actived { get; set; }       // Đánh dấu xóa
@@ -83,6 +83,7 @@ namespace SaleManager.Models
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
+        public virtual IList<OrderDetail> OrderDetails { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Category Category { get; set; }
     }

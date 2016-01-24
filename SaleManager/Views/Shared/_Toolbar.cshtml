@@ -16,21 +16,9 @@
               .Class("submit-button")
               .Style(ButtonStyle.Danger)
               .PrependIcon("fa fa-power-off"))
-        @if (ViewBag.Id != null)
-        {
-            @(Html.Bootstrap()
-              .ActionLinkButton("Trở về danh sách", "Index")
-              .Style(ButtonStyle.Info)
-              .RouteValues(new { id = ViewBag.Id })
-              .PrependIcon("fa fa-reply-all"))
-        }
-        else
-        {
-            @(Html.Bootstrap()
+        @(Html.Bootstrap()
               .ActionLinkButton("Trở về danh sách", "Index")
               .Style(ButtonStyle.Info)
               .PrependIcon("fa fa-reply-all"))
-        }
-
     </div>
 </div>

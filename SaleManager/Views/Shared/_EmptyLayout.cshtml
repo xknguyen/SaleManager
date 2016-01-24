@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ETesting</title>
     @Styles.Render("~/Content/admbootstrap")
-    @RenderSection("pluginStyles", required: false)
     @Styles.Render("~/Content/admstyle")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("pluginStyles", required: false)
 </head>
 <body class="gray-bg">
 @RenderBody()
-@Scripts.Render("~/bundles/jquery")
+@*@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+@RenderSection("scripts", required: false)*@
+    @Scripts.Render("~/bundles/admmainjs")
+    @RenderSection("pluginScripts", required: false)
+    @Scripts.Render("~/bundles/admcustomjs")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

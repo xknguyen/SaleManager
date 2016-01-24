@@ -28,3 +28,7 @@
 }
 
 
+.dropdown-width {
+    max-width: 150px;
+    float: right;
+}

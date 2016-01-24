@@ -20,7 +20,7 @@ namespace SaleManager.Controllers
 
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -32,9 +32,9 @@ namespace SaleManager.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -73,28 +73,23 @@ namespace SaleManager.Controllers
             var account = UserManager.FindByName(model.UserName);
             if (account != null)
             {
-                if (account.Profile.Actived)
+                var result =
+                    await
+                        SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe,
+                            shouldLockout: false);
+                switch (result)
                 {
-                    var result =
-                        await
-                            SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe,
-                                shouldLockout: false);
-                    switch (result)
-                    {
-                        case SignInStatus.Success:
-                            return RedirectToLocal(returnUrl);
-                        case SignInStatus.LockedOut:
-                            return View("Lockout");
-                        case SignInStatus.RequiresVerification:
-                            return RedirectToAction("SendCode",
-                                new {ReturnUrl = returnUrl,  model.RememberMe});
-                        default:
-                            ModelState.AddModelError("", "Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.");
-                            return View(model);
-                    }
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode",
+                            new { ReturnUrl = returnUrl, model.RememberMe });
+                    default:
+                        ModelState.AddModelError("", "Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.");
+                        return View(model);
                 }
-                ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa, vui lòng liên hệ với quản trị viên.");
-                return View(model);
             }
             ModelState.AddModelError("", "Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.");
             return View(model);
@@ -129,7 +124,7 @@ namespace SaleManager.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -163,8 +158,8 @@ namespace SaleManager.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -316,7 +311,7 @@ namespace SaleManager.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider,  model.ReturnUrl, model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //

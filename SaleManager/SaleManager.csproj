@@ -190,6 +190,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -198,14 +199,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601231751294_Initial.cs" />
+    <Compile Include="Migrations\201601231751294_Initial.Designer.cs">
+      <DependentUpon>201601231751294_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601240639331_UpdateCustomerInfo.cs" />
+    <Compile Include="Migrations\201601240639331_UpdateCustomerInfo.Designer.cs">
+      <DependentUpon>201601240639331_UpdateCustomerInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601240704275_SystemID.cs" />
+    <Compile Include="Migrations\201601240704275_SystemID.Designer.cs">
+      <DependentUpon>201601240704275_SystemID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601240734016_DeleteCustomerActived.cs" />
+    <Compile Include="Migrations\201601240734016_DeleteCustomerActived.Designer.cs">
+      <DependentUpon>201601240734016_DeleteCustomerActived.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\SystemParameter.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -406,6 +426,7 @@
     <Content Include="Content\img\Thumbs.db" />
     <Content Include="Content\less\bootstrap-datetimepicker-build.less" />
     <Content Include="Content\less\_bootstrap-datetimepicker.less" />
+    <Content Include="Scripts\custom\create-edit.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -723,10 +744,13 @@
     <Content Include="Views\Shared\_ProfilePartial.cshtml" />
     <Content Include="Views\Shared\_Toolbar.cshtml" />
     <Content Include="TwitterBootstrapMvcLicense.lic" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\custom\" />
+    <Folder Include="Images\" />
     <Folder Include="Scripts\model\" />
   </ItemGroup>
   <ItemGroup>
@@ -738,6 +762,20 @@
       <Project>{f2cee9f5-ba18-4854-ac24-4f83bd3f63c0}</Project>
       <Name>SaleCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201601231751294_Initial.resx">
+      <DependentUpon>201601231751294_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601240639331_UpdateCustomerInfo.resx">
+      <DependentUpon>201601240639331_UpdateCustomerInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601240704275_SystemID.resx">
+      <DependentUpon>201601240704275_SystemID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601240734016_DeleteCustomerActived.resx">
+      <DependentUpon>201601240734016_DeleteCustomerActived.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

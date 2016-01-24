@@ -9,20 +9,19 @@ namespace SaleManager.Models
     public class Category
     {
         [Required(ErrorMessage = "{0} không được để trống")]
+        public long CategoryId { get; set; }
+
+        [Required(ErrorMessage = "{0} không được để trống")]
         [Display(Name = "Tên danh mục")]
-        public string GroupName { get; set; }
+        public string CategoryName { get; set; }
 
         [AllowHtml]
         [DataType(DataType.MultilineText)]
         [Display(Name = "Mô tả")]
         public string Description { get; set; }
 
-        public string GetDescription => HttpUtility.HtmlDecode(Description);
-
         [Display(Name = "Danh mục cha")]
-        public long? ParentGroupId { get; set; }
-
-        public long CourseId { get; set; }
+        public long? ParentCategoryId { get; set; }
 
         [Display(Name = "Trạng thái")]
         public bool Actived { get; set; }
@@ -33,7 +32,8 @@ namespace SaleManager.Models
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public virtual Group ParentGroup { get; set; }
-        public virtual IList<Group> ChildGroups { get; set; }
+        public virtual Category ParentCategory { get; set; }
+        public virtual IList<Category> ChildCategories { get; set; }
+        public virtual IList<Product> Products { get; set; }
     }
 }

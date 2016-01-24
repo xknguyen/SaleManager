@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using SaleCore.Utilities;
+using System.Web.Mvc;
+using System.Web.Routing;
+using System.Web;
 
 namespace SaleCore.Extensions
 {
@@ -152,7 +156,8 @@ namespace SaleCore.Extensions
 		{
 			if (htmlAttributes == null)
 			{
-				throw new ArgumentNullException("Collection is null");
+			    // ReSharper disable once NotResolvedInText
+				throw new ArgumentNullException(@"Collection is null");
 			}
 			foreach (KeyValuePair<string, object> current in htmlAttributes)
 			{
@@ -239,15 +244,15 @@ namespace SaleCore.Extensions
 				throw new ArgumentException("EnumerationValue must be of Enum type", "enumerationValue");
 			}
 			MemberInfo[] member = type.GetMember(enumerationValue.ToString());
-			if (member != null && member.Length > 0)
+			if (member.Length > 0)
 			{
 				object[] customAttributes = member[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 				object[] customAttributes2 = member[0].GetCustomAttributes(typeof(DisplayAttribute), false);
-				if (customAttributes != null && customAttributes.Length > 0)
+				if (customAttributes.Length > 0)
 				{
 					return ((DescriptionAttribute)customAttributes[0]).Description;
 				}
-				if (customAttributes2 != null && customAttributes2.Length > 0)
+				if (customAttributes2.Length > 0)
 				{
 					return ((DisplayAttribute)customAttributes2[0]).Name;
 				}
@@ -276,7 +281,7 @@ namespace SaleCore.Extensions
 			Type type = metadata.ModelType;
 			if (type.IsNullableEnum() || type.IsGenericEnumerable())
 			{
-				type = type.GetGenericArguments().First<Type>();
+				type = type.GetGenericArguments().First();
 			}
 			if (type.IsArray)
 			{

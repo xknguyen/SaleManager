@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SaleManager.Models
@@ -45,5 +46,6 @@ namespace SaleManager.Models
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
+        public virtual IList<Product> Products { get; set; } 
     }
 }
