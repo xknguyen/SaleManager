@@ -1,0 +1,51 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+}
+
+@section pluginStyles
+{
+    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
+    <link href="~/Content/plugins/chosen/chosen.css" rel="stylesheet" />
+    <link href="~/Content/custom/file.css" rel="stylesheet" />
+
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Thêm sản phẩm mới</h5>
+            </div>
+            <div class="ibox-content p-sm">
+                @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @(Html.ValidationSummary(true, "", new {@class = "text-danger"}))
+                        @Html.HiddenFor(s=>s.ProductId)
+                        @Html.Partial("_CreateOrEdit", Model)
+                        @Html.Partial("_Toolbar")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_MediaForm")
+
+@section pluginScripts
+{
+    <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Scripts/plugins/chosen/chosen.jquery.js"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/bootstrap-treeview.js"></script>
+    <script src="~/Scripts/custom/file.js"></script>
+    <script src="~/Scripts/custom/create-edit.js"></script>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/admjqueryval")
+}

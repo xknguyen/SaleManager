@@ -8,6 +8,7 @@
 {
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link href="~/Content/AdmGrid.css" rel="stylesheet" />
+
 }
 
 <div class="row">
@@ -17,7 +18,7 @@
                 <h5>Danh sách khách hàng</h5>
                 <div class="ibox-tools">
                     @(Html.Bootstrap()
-                          .ActionLink("Thêm tài khoản", "Create")
+                          .ActionLink("Thêm khách hàng", "Create")
                           .Class("btn btn-primary btn-xs")
                           .PrependIcon("fa fa-plus"))
                 </div>
@@ -27,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-sm">
 
-                        @using (Html.BeginForm("Index", "Customer", FormMethod.Get, new { @class = "form-horizontal", role = "search", id = "searchAccount" }))
+                        @using (Html.BeginForm("Index", "Customer", FormMethod.Get, new { @class = "form-horizontal", role = "search", id = "searchEntity" }))
                         {
                             <div class="input-group">
                                 @(Html.TextBox("Keyword", null, new
@@ -50,22 +51,22 @@
                     </div>
                     <div class="col-md-6 m-b-sm">
                         @(Html.DropDownList("supStatus", null,
-                          new { @class = "input-sm dropdown-width", id = "statusSelect" }))
+                              new { @class = "input-sm dropdown-width", id = "statusSelect" }))
                     </div>
                 </div>
                 <table id="tblCustomers" class="table table-responsive table-bordered table-hover tbldata">
                     <thead>
-                    <tr>
-                        <th width="80px">Mã KH</th>
-                        <th width="150px">Họ và tên</th>
-                        <th class="hidden-sm hidden-xs">Thông tin khách hàng</th>
-                        <th width="150px">Nợ</th>
-                        <th width="100px"></th>
-                    </tr>
+                        <tr>
+                            <th width="80px">Mã KH</th>
+                            <th width="150px">Họ và tên</th>
+                            <th class="hidden-sm hidden-xs">Thông tin khách hàng</th>
+                            <th width="150px">Nợ</th>
+                            <th width="100px"></th>
+                        </tr>
                     </thead>
                     @if (Model.Count != 0)
                     {
-                        
+
                         foreach (var item in Model)
                         {
                             <tr>
@@ -81,9 +82,9 @@
 
                                 <td class="hidden-sm hidden-xs">
                                     @* ReSharper disable once AccessToForEachVariableInClosure *@
-                                    Địa chỉ: @Html.DisplayFor(modelItem => item.Address)<br/>
+                                    Địa chỉ: @Html.DisplayFor(modelItem => item.Address)<br />
                                     @* ReSharper disable once AccessToForEachVariableInClosure *@
-                                    SĐT: @Html.DisplayFor(modelItem => item.PhoneNumber)<br/>
+                                    SĐT: @Html.DisplayFor(modelItem => item.PhoneNumber)<br />
                                 </td>
 
                                 <td>
@@ -94,18 +95,19 @@
                                 <td>
                                     @(Html.Bootstrap()
                                           .ActionLink("", "Dept", "Order")
-                                          .RouteValues(new { item.CustomerId })
+                                          .RouteValues(new { id = item.CustomerId })
                                           .Title("Quản lý công nợ khách hàng")
                                           .AppendIcon("fa fa-money fa-2x"))
                                     @(Html.Bootstrap()
                                           .ActionLink("", "Edit")
-                                          .RouteValues(new {item.CustomerId})
+                                          .RouteValues(new { id = item.CustomerId })
                                           .Title("Cập nhật thông tin khách hàng")
                                           .AppendIcon("fa fa-pencil fa-2x"))
                                     @(Html.Bootstrap()
                                           .ActionLink("", "Delete")
-                                          .RouteValues(new {item.CustomerId})
+                                          .RouteValues(new { id = item.CustomerId })
                                           .Title("Xóa thông tin khách hàng")
+                                          .Class("delete-customer")
                                           .AppendIcon("fa fa-trash-o fa-2x"))
                                 </td>
                             </tr>
@@ -122,29 +124,99 @@
                     <div class="col-md-6 m-b-sm text-center">
                         Hiển thị
                         @(Html.DropDownList("PageSize", null,
-                          new { @class = "input-sm", id = "pageSelect" }))
+                              new { @class = "input-sm", id = "pageSelect" }))
                         mẫu tin
                     </div>
                     <div class="col-md-6 text-center">
                         @Html.PagedListPager(
-                        Model,
-                        page => Url.Action(
-                            "Index",
-                            new
-                            {
-                                page,
-                                pageSize = ViewBag.CurrentPageSize,
-                                keyword = ViewBag.Keyword,
-                                status = ViewBag.CurrentStatus
-                            }),
-                        PagedListRenderOptions.ClassicPlusFirstAndLast)
+                            Model,
+                            page => Url.Action(
+                                "Index",
+                                new
+                                {
+                                    page,
+                                    pageSize = ViewBag.CurrentPageSize,
+                                    keyword = ViewBag.Keyword,
+                                    status = ViewBag.CurrentStatus
+                                }),
+                            PagedListRenderOptions.ClassicPlusFirstAndLast)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="hidden">
+    <div id="delete-dialog-confirm" title="Xóa khách hàng">
+        <p id="delete-dialog-text">
+            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+
+        </p>
+    </div>
+
+</div>
 
 @section scripts
 {
+    <script src="~/Scripts/custom/index.js"></script>
+    <script>
+        $(function () {
+            $(".delete-customer").on("click", function (e) {
+                e.preventDefault();
+                $("#delete-dialog-text").html("Việc xóa thông tin khách hàng sẽ xóa công nợ của khách hàng đó.<br /> Bạn có chắc chắn xóa không?");
+                var url = $(this).attr("href");
+                var tr = $(this).closest('tr');
+                $("#delete-dialog-confirm").dialog({
+                    resizable: false,
+                    draggable: false,
+                    height: 150,
+                    width: 500,
+                    modal: true,
+                    buttons: {
+                        "Xóa khách hàng": function () {
+                            $("#delete-dialog-text").html("Đang xóa. Xin chờ một chút.......");
+                           $("#delete-dialog-confirm").dialog("option", "buttons",
+                            [
+                                {
+                                    text: "Cancel",
+                                    icons: {
+                                        primary: "ui-icon-heart"
+                                    },
+                                    click: function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            ]);
+                            var that = this;
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                success: function (data) {
+                                    if (data.Success) {
+                                        tr.remove();
+                                        var tables = $("#tblCustomers tbody").find("tr").length;
+                                        if (tables === 0) {
+                                            window.location.reload(true);
+                                        }
+                                        $(that).dialog("close");
+                                    }
+                                    else {
+                                        $("#delete-dialog-text").html(data.Message);
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert();
+                                    $("#delete-dialog-text").html(xhr.responseText);
+                                }
+                            });
+
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 }

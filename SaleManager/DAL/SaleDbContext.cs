@@ -42,7 +42,8 @@ namespace SaleManager.DAL
             // Thiết lập mối quan hệ giữa Nhà cung cấp và sản phẩm
             modelBuilder.Entity<Supplier>()
                 .HasMany(s => s.Products)
-                .WithRequired(p => p.Supplier)
+                .WithOptional(p => p.Supplier)
+                .HasForeignKey(c => c.SupplierId)
                 .WillCascadeOnDelete(true);
 
 

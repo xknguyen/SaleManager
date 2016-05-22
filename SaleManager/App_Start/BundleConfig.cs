@@ -22,6 +22,7 @@ namespace SaleManager
                 ));
             bundles.Add(new ScriptBundle("~/bundles/admmainjs").Include(
                 "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery-ui.js",
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js",
                 "~/Scripts/plugins/metisMenu/jquery.metisMenu.js",
@@ -38,7 +39,8 @@ namespace SaleManager
 
             bundles.Add(new StyleBundle("~/Content/admbootstrap").Include(
                       "~/Content/bootstrap.min.css",
-                      "~/Content/fonts/font-awesome/css/font-awesome.min.css"));
+                      "~/Content/fonts/font-awesome/css/font-awesome.min.css",
+                      "~/Content/jquery-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/admstyle").Include(
                       "~/Content/animate.css",
@@ -46,6 +48,7 @@ namespace SaleManager
 
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
                      "~/Scripts/dropzone/dropzone.js"));
+
             bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
                      "~/Scripts/dropzone/css/basic.css",
                      "~/Scripts/dropzone/css/dropzone.css"));
@@ -70,10 +73,9 @@ namespace SaleManager
                       "~/Scripts/respond.js",
                       "~/Scripts/inspinia/cbpAnimatedHeader.js",
                       "~/Scripts/inspinia/classie.js",
+                      "~/Scripts/inspinia/inspinia.js",
                       "~/Scripts/inspinia/pace.min.js",
-                      //"~/Scripts/bootstrap-datetimepicker.js",
-                      "~/Scripts/inspinia/wow.min.js",
-                      "~/Scripts/inspinia/inspinia.js"));
+                      "~/Scripts/inspinia/wow.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

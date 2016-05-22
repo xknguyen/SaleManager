@@ -21,36 +21,16 @@ namespace SaleManager.Models
         [Display(Name = "Tên sản phẩm")]
         public string ProductName { get; set; }        // Tên sản phẩm
 
-        [DisplayName("Tên không dấu")]
-        public string Alias { get; set; }       // Tên không dấu tiếng việt
-
         [DisplayName("Hình ảnh")]
         public string ThumbImage { get; set; }      // Hình ảnh
-        
-        // Ảnh thu nhỏ
-        public string Thumb
-        {
-            get
-            {
-                var names = ThumbImage.Split('\\');
-                var targetFolder = "";
-                for (var i = 0; i < names.Length - 1; i++)
-                {
-                    targetFolder += names[i];
-                    if (i != names.Length - 1)
-                        targetFolder += "\\";
-                }
-
-                var newName = "thumb-" + names[names.Length - 1];
-                return Path.Combine(targetFolder, newName);
-            }
-        }
 
         [DisplayName("Số hiệu sản phẩm")]
         public string ProductCode { get; set; }     // Số hiệu sản phẩm
 
+        [DisplayName("Mô tả")]
         [Column(TypeName = "ntext")]
         [AllowHtml]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }     // Mô tả chi tiết
 
         [DisplayName("Đơn vị")]
@@ -68,7 +48,7 @@ namespace SaleManager.Models
         public int PriceB { get; set; }
 
         [DisplayName("Mã nhà cung cấp")]
-        public int SupplierId { get; set; }     // Mã nhà cung cấp
+        public long? SupplierId { get; set; }     // Mã nhà cung cấp
 
         [Required(ErrorMessage = "{0} không được để trống")]
         [DisplayName("Mã danh mục")]
@@ -79,9 +59,6 @@ namespace SaleManager.Models
 
         [DisplayName("Trọng lượng")]
         public float? Weight { get; set; }
-
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
 
         public virtual IList<OrderDetail> OrderDetails { get; set; }
         public virtual Supplier Supplier { get; set; }

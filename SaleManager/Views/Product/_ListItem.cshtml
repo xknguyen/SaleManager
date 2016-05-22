@@ -1,0 +1,45 @@
+﻿@model Product
+
+<tr>
+    <td class="hidden-xs">
+        <a href="@Url.Content(Model.ThumbImage??"/Images/Pictures.png")" target="_blank" title="Xem kích thước thật">
+            <img src="@Url.Content(Model.ThumbImage??"/Images/Pictures.png")" alt="@Model.ProductName" width="100" />
+        </a>
+    </td>
+    <td>
+        <a href="@Url.Action("Details", new {id = Model.ProductId})"
+           class="text-success font-bold" title="Xem chi tiết">
+            @Html.DisplayFor(model => model.ProductName)
+        </a>
+        (<strong class="text-danger">@Html.DisplayFor(model => model.ProductCode)</strong>)
+        <br />
+        Cty cung cấp : @Html.DisplayFor(model => model.Supplier.SupplierName)<br />
+        <small>@Html.DisplayFor(model => model.Description)</small>
+    </td>
+
+    <td class="hidden-sm hidden-xs">
+        Đơn giá nhập : @(Model.InputPrice + "đ")<br />
+        Đơn giá SP A : @(Model.PriceA + "đ")<br />
+        Đơn giá SP B : @(Model.PriceB + "đ")
+    </td>
+
+    <td class="hidden-sm hidden-xs">
+        Đơn vị tính: @Html.DisplayFor(model => model.QtyPerUnit)
+    </td>
+
+    <td class="td_toggle">
+        <button type="button" class="toggle @(Model.Actived.ToString().ToLower())"
+                data-toggle-state="true"
+                data-url="@Url.Action("UpdateToggle")"
+                data-args="Actived_@(Model.Actived.ToString().ToLower())_@(Model.ProductId)"></button>
+    </td>
+
+    <td>
+        @(Html.Bootstrap().ActionLink("", "Edit")
+              .RouteValues(new { id = Model.ProductId })
+              .Title("Cập nhật thông tin SP")
+              .AppendIcon("fa fa-2x fa-pencil"))
+
+    </td>
+</tr>
+

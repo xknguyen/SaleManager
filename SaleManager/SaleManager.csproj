@@ -190,10 +190,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="DAL\AccountSeeder.cs" />
     <Compile Include="DAL\SaleDbContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,14 +220,52 @@
     <Compile Include="Migrations\201601240734016_DeleteCustomerActived.Designer.cs">
       <DependentUpon>201601240734016_DeleteCustomerActived.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601241042411_UpdateIdentityKeyCustomer.cs" />
+    <Compile Include="Migrations\201601241042411_UpdateIdentityKeyCustomer.Designer.cs">
+      <DependentUpon>201601241042411_UpdateIdentityKeyCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601310301263_UpdateSupplier.cs" />
+    <Compile Include="Migrations\201601310301263_UpdateSupplier.Designer.cs">
+      <DependentUpon>201601310301263_UpdateSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601310332428_UpdateProduct1.cs" />
+    <Compile Include="Migrations\201601310332428_UpdateProduct1.Designer.cs">
+      <DependentUpon>201601310332428_UpdateProduct1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601310344366_UpdateProduct11.cs" />
+    <Compile Include="Migrations\201601310344366_UpdateProduct11.Designer.cs">
+      <DependentUpon>201601310344366_UpdateProduct11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601310352191_UpdateProduct2.cs" />
+    <Compile Include="Migrations\201601310352191_UpdateProduct2.Designer.cs">
+      <DependentUpon>201601310352191_UpdateProduct2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601310529135_UpdateProduct3.cs" />
+    <Compile Include="Migrations\201601310529135_UpdateProduct3.Designer.cs">
+      <DependentUpon>201601310529135_UpdateProduct3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602011751187_UpdateProduct4.cs" />
+    <Compile Include="Migrations\201602011751187_UpdateProduct4.Designer.cs">
+      <DependentUpon>201602011751187_UpdateProduct4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605180114443_UpdateDb.cs" />
+    <Compile Include="Migrations\201605180114443_UpdateDb.Designer.cs">
+      <DependentUpon>201605180114443_UpdateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605221230320_UpdateOederDetail.cs" />
+    <Compile Include="Migrations\201605221230320_UpdateOederDetail.Designer.cs">
+      <DependentUpon>201605221230320_UpdateOederDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DataGroupModel.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\SystemParameter.cs" />
@@ -235,6 +278,7 @@
     <Content Include="Content\AdmSite.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-3.3.0.min.css" />
+    <Content Include="Content\bootstrap-combobox.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-slider.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -264,6 +308,12 @@
     <Content Include="Content\front-end\SourceSanPro.css" />
     <Content Include="Content\front-end\Ubunto.css" />
     <Content Include="Content\ico\favicon.ico" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\img\breadcumb.png" />
     <Content Include="Content\img\browsers.png" />
     <Content Include="Content\img\close.png" />
@@ -294,6 +344,11 @@
     <Content Include="Content\img\photo-6.jpg" />
     <Content Include="Content\img\prev.png" />
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\jquery.nestable.css" />
     <Content Include="Content\js\bootstrap-datetimepicker.min.js" />
@@ -364,6 +419,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\Loading.gif" />
+    <Content Include="Images\NoAvatar.png" />
+    <Content Include="Images\ok.png" />
+    <Content Include="Images\Pictures.png" />
+    <Content Include="Images\silverstar.png" />
+    <Content Include="Images\tick.gif" />
+    <Content Include="Images\yellowstar.png" />
+    <Content Include="Scripts\bootstrap-combobox.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-slider.min.js" />
@@ -427,7 +492,13 @@
     <Content Include="Content\less\bootstrap-datetimepicker-build.less" />
     <Content Include="Content\less\_bootstrap-datetimepicker.less" />
     <Content Include="Scripts\custom\create-edit.js" />
+    <Content Include="Scripts\custom\dialog.js" />
+    <Content Include="Scripts\custom\file.js" />
+    <Content Include="Scripts\custom\index.js" />
+    <Content Include="Scripts\custom\OrderDetail.js" />
     <Content Include="Scripts\errors.json" />
+    <Content Include="Scripts\formValidation.min.js" />
+    <Content Include="Scripts\framework\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -747,10 +818,29 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Customer\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Error\AccessDeniedPage.cshtml" />
+    <Content Include="Views\Error\ErrorPage.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Supplier\Create.cshtml" />
+    <Content Include="Views\Supplier\Edit.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_ListItem.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Order\_CreateOrEdit.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\_OrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="Scripts\model\" />
   </ItemGroup>
   <ItemGroup>
@@ -775,6 +865,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601240734016_DeleteCustomerActived.resx">
       <DependentUpon>201601240734016_DeleteCustomerActived.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601241042411_UpdateIdentityKeyCustomer.resx">
+      <DependentUpon>201601241042411_UpdateIdentityKeyCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601310301263_UpdateSupplier.resx">
+      <DependentUpon>201601310301263_UpdateSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601310332428_UpdateProduct1.resx">
+      <DependentUpon>201601310332428_UpdateProduct1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601310344366_UpdateProduct11.resx">
+      <DependentUpon>201601310344366_UpdateProduct11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601310352191_UpdateProduct2.resx">
+      <DependentUpon>201601310352191_UpdateProduct2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601310529135_UpdateProduct3.resx">
+      <DependentUpon>201601310529135_UpdateProduct3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602011751187_UpdateProduct4.resx">
+      <DependentUpon>201602011751187_UpdateProduct4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605180114443_UpdateDb.resx">
+      <DependentUpon>201605180114443_UpdateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605221230320_UpdateOederDetail.resx">
+      <DependentUpon>201605221230320_UpdateOederDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -30,9 +30,10 @@
         </footer>
     </div>
 </div>
-    @Scripts.Render("~/bundles/admmainjs")
-    @RenderSection("pluginScripts", required:false)
-    @Scripts.Render("~/bundles/admcustomjs")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/admmainjs")
+@RenderSection("pluginScripts", required: false)
+@Scripts.Render("~/bundles/admcustomjs")
+@RenderSection("scripts", required: false)
 </body>
+@RenderSection("Popup", required: false)
 </html>

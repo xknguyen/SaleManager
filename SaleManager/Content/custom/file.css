@@ -1,56 +1,71 @@
 ﻿#mediaForm .modal-dialog {
     width: 95%;
 }
-#mediaForm .file-header,.file-body {
+
+#mediaForm .file-header, .file-body {
     height: 450px;
 }
+
 #mediaForm .modal-header {
     padding: 15px;
 }
+
 #mediaForm .file {
     margin-bottom: 0;
     margin-right: 0;
 }
+
 #mediaForm .file-box {
     width: 120px;
 }
+
 #mediaForm .file-body .ibox-content {
     min-height: 320px;
 }
+
 #mediaForm .file-body .ibox {
     margin: 0px;
 }
-#mediaForm .col-md-9,.col-md-3 {
+
+#mediaForm .col-md-9, .col-md-3 {
     padding: 0px;
 }
+
 #mediaForm .modal-body {
     padding: 0;
 }
+
 #mediaForm .ibox-content {
     padding: 0;
 }
+
 #mediaForm .scroll {
     overflow: auto;
 }
+
 #mediaForm .ibox-title {
     border: none;
 }
+
 #mediaForm .file-content {
     height: 400px;
 }
+
 #mediaForm .image-remove {
     z-index: 2;
     position: absolute;
     color: red;
 }
+
 #mediaForm .file-box {
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: 10px;
 }
-#mediaForm .file-box img {
-    cursor: pointer;
-}
+
+    #mediaForm .file-box img {
+        cursor: pointer;
+    }
 
 #mediaForm .selected {
     border-color: red;
@@ -61,15 +76,30 @@
 #fileContent img {
     width: 120px;
     height: 120px;
-    
 }
+
+.file .image {
+    height: auto;
+}
+
 #fileContent .m-t-sm {
     margin-top: 0;
 }
+
 #mediaForm .ibox-tools a {
     color: white;
 }
 
-#uploadBox,#newFolderBox {
+#uploadBox, #newFolderBox {
     margin-left: 0px;
 }
+
+#choose-image {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+    #choose-image img {
+        max-height: 200px;
+    }

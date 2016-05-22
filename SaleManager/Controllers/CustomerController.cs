@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using PagedList;
@@ -11,6 +12,7 @@ namespace SaleManager.Controllers
 {
     public class CustomerController : BaseController
     {
+        
         /// <summary>
         /// Trang danh sách khách hàng
         /// </summary>
@@ -66,10 +68,6 @@ namespace SaleManager.Controllers
                     accounts = accounts.Where(x => x.Lack == 0);
                     break;
             }
-            if (status.Value == 0)
-            {
-                
-            }
             var data = accounts.ToPagedList(page.Value, pageSize.Value);
             return View(data);
         }
@@ -87,8 +85,6 @@ namespace SaleManager.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string s = null;
-                    s.ToLower();
                     DbContext.Customers.Add(customer);
                     if (DbContext.SaveChanges() > 0)
                         return Redirect(null);
@@ -101,6 +97,96 @@ namespace SaleManager.Controllers
                 ex.Write(LogPath);
             }
             return View(customer);
+        }
+
+        public ActionResult Edit(long? id)
+        {
+            if (id == null)
+            {
+                return RedirectErrorPage(Url.Action("Index", "Customer"));
+            }
+            var customer = DbContext.Customers.Find(id);
+            if (customer == null)
+            {
+                return RedirectErrorPage(Url.Action("Index", "Customer"));
+            }
+            return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Customer customer)
+        {
+            var customerDb = DbContext.Customers.Find(customer.CustomerId);
+            if (customerDb == null)
+            {
+                ModelState.AddModelError(string.Empty, "Không thể lưu thay đổi, danh mục này đã bị xóa");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    TryUpdateModel(customerDb);
+                    DbContext.Entry(customerDb).State = EntityState.Modified;
+                    if (DbContext.SaveChanges() > 0)
+                    {
+                        return Redirect(null);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    ex.Write(LogPath);
+                }
+            }
+            return View(customerDb);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(long? id)
+        {
+            string message = "";
+            bool success = false;
+
+            try
+            {
+                if (id == null)
+                {
+                    message = "Thông tin mã khách hàng bị thiếu!";
+                }
+                else
+                {
+                    var customer = DbContext.Customers.Find(id);
+                    if (customer == null)
+                    {
+                        message = "Thông tin mã khách hàng không còn tồn tại!";
+                    }
+                    else
+                    {
+                        DbContext.Customers.Remove(customer);
+                        if (DbContext.SaveChanges() > 0)
+                        {
+                            message = "Xóa thành công";
+                            success = true;
+                        }
+                        else
+                        {
+                            message = "Đã có lỗi xảy ra. Vui lòng thử lại sau!";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Write(LogPath);
+                message = "Đã có lỗi xảy ra. Vui lòng thử lại sau!";
+            }
+
+            return Json(new
+            {
+                Message = message,
+                Success = success
+            });
         }
     }
 }

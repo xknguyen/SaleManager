@@ -1,0 +1,60 @@
+﻿@model OrderModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CustomerId, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CustomerId, Model.Customers, "Chọn khách hàng", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.SaleDate, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.SaleDate, new { @class = "form-control", disabled = true })
+        @Html.ValidationMessageFor(model => model.SaleDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.MethodofPayment, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.MethodofPayment, Model.MethodofPayments, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.MethodofPayment, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.Label("Danh sách sản phẩm", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.ValidationMessageFor(model => model.OrderDetailJson, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(model => model.OrderDetailJson, new { @class = "form-control hidden" })
+        <div class="col-md-12 order-details">
+            @Html.Partial("_OrderDetails", Model)
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+        <div class="order-detail">
+            <div class="col-md-8">
+                @Html.DropDownList("product", Model.Products, "Chọn sản phẩm", new { @class = "form-control combobox" })
+            </div>
+            <div class="col-md-1">
+                @Html.TextBox("quantity", "0", new { @class = "form-control quantity", type = "Number", min = 1 })
+            </div>
+            <div class="col-md-2">
+                @Html.TextBox("price", "0", new { @class = "form-control price", type = "Number", min = 0 })
+            </div>
+            <div class="col-md-1">
+                @(Html.Bootstrap().Button()
+                      .PrependIcon("fa fa-plus")
+                      .Style(ButtonStyle.Success)
+                      .Class("add-product")
+                      .Text("")
+                      .Size(ButtonSize.Mini))
+            </div>
+        </div>  
+    </div>
+</div>

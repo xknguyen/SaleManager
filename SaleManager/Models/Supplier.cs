@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace SaleManager.Models
 {
     public class Supplier
     {
         [DisplayName("Mã công ty")]
-        public int SupplierId { get; set; }     // Mã nhà cung cấp
+        public long SupplierId { get; set; }     // Mã nhà cung cấp
 
         [DisplayName("Tên công ty")]
         [Required(ErrorMessage = "{0} không được để trống")]
@@ -15,6 +16,7 @@ namespace SaleManager.Models
 
         [DisplayName("Mô tả")]
         [DataType(DataType.MultilineText)]
+        [AllowHtml]
         public string Description { get; set; }     // Mô tả sơ lược về công ty
 
         [DisplayName("Tên người đại diện")]
@@ -37,14 +39,6 @@ namespace SaleManager.Models
 
         [DisplayName("Địa chỉ Website")]
         public string HomePage { get; set; }        //  Địa chỉ Website
-
-        [DisplayName("Trạng thái")]
-        public bool Actived { get; set; }       // Đánh dấu xóa
-
-        // Thuộc tính này dùng để theo dõi việc cập nhật thông tin
-        // và sử dụng cho việc xử lý truy cập đồng thời
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
 
         public virtual IList<Product> Products { get; set; } 
     }

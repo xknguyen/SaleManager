@@ -1,0 +1,39 @@
+﻿@model Customer
+
+@{
+    ViewBag.Title = "Quản lí khách hàng";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Cập nhật thông tin khách hàng</h5>
+            </div>
+            <div class="ibox-content p-sm">
+                @using (Html.BeginForm("Edit", "Customer", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.CustomerId)
+                    <div class="form-horizontal">
+                        @(Html.ValidationSummary(true, "", new { @class = "text-danger", id = "Validation" }))
+                        @Html.Partial("_CreateOrEdit", Model)
+                        @Html.Partial("_Toolbar")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section pluginScripts
+{
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/custom/create-edit.js"></script>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/admjqueryval")
+}

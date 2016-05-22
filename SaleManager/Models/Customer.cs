@@ -11,6 +11,7 @@ namespace SaleManager.Models
 {
     public class Customer
     {
+        [Key]
         public long CustomerId { get; set; }   
 
         [Required(ErrorMessage = "{0} không được để trống")]

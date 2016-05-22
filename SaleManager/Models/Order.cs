@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,8 @@ namespace SaleManager.Models
 {
     public enum OrderStatus
     {
-        New = 1, // Đơn hàng mới
-        Cancelled, // Đã hủy
-        Approved, // Đã xác nhận
-        Shipping, // Đang giao hàng
-        Returned, // Trả hàng
-        Success // Đã giao hàng thành công
+        Lack = 1, // Đơn hàng mới
+        Done, // Đã hủy
     }
     public class Order
     {
@@ -44,10 +41,11 @@ namespace SaleManager.Models
         public decimal Paid { get; set; }
 
         [DisplayName("Còn thiếu")]
-        public decimal Lack => Total - Paid;
+        public decimal Lack { get; set; }
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+        [NotMapped]
+        public string Details { get; set; }
+
 
         public virtual Customer Customer { get; set; }
         public virtual IList<OrderDetail> OrderDetails { get; set; }

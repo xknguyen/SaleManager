@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SaleManager.DAL;
@@ -82,5 +84,64 @@ namespace SaleManager.Controllers
                 DbContext.Dispose();
             base.Dispose(disposing);
         }
+
+        protected virtual bool OnUpdateToggle(
+            string propName, bool value, object[] keys)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Cập nhật giá trị một thuộc tính có kiểu true/false
+        /// </summary>
+        /// <param name="args">
+        /// Chuỗi chứa tên thuộc tính, giá trị hiện tại và id
+        /// của mẫu tin cần cập nhật - phân tách nhau bởi dấu _
+        /// </param>
+        /// <returns>
+        /// Trả về đối tượng Json cho biết có cập nhật thành công
+        /// hay không. Nếu có, dữ liệu đi kèm sẽ là chuỗi args mới
+        /// chứa giá trị sau khi cập nhật. Nếu không, dữ liệu đi
+        /// kèm sẽ là thông báo lỗi.
+        /// </returns>
+        [HttpPost]
+        public JsonResult UpdateToggle(string args)
+        {
+            var success = false; // Cho biết cập nhật thành công?
+            var html = string.Empty; // Thông báo trả về cho client
+
+            try
+            {
+                // Tách chuỗi args thành mảng các chuỗi chứa
+                var data = args.Split('_');
+                var propName = data[0]; // Tên thuộc tính
+                var value = !bool.Parse(data[1]); // Giá trị hiện tại
+                var keys = data.Skip(2).ToArray(); // Id của mẫu tin
+
+                // Gọi hàm cập nhật giá trị thuộc tính
+                if (OnUpdateToggle(propName, value, keys))
+                {
+                    success = true;
+
+                    // Tạo chuỗi tương tự args với giá trị mới
+
+                    html = string.Format("{0}_{1}_{2}",
+                        propName,
+                        value.ToString().ToLower(),
+                        string.Join("_", keys));
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                html = ex.Message; // Lưu lại thông báo lỗi
+            }
+            return Json(new
+            {
+                Result = success,
+                Message = html
+            });
+        }
+
     }
 }
