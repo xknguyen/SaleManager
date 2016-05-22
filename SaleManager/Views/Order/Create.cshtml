@@ -1,0 +1,182 @@
+﻿@model OrderModel
+
+@{
+    ViewBag.Title = "Quản lý hóa đơn";
+}
+
+@section pluginStyles
+{
+    <link href="~/Content/custom/file.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-combobox.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <style>
+        .order-details {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .order-detail {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            .order-detail .col-md-8, .col-md-1, .col-md-2 {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+        .add-product {
+            border-radius: 20px;
+            margin-top: 7px;
+            margin-left: 10px;
+        }
+
+        .dataTables_wrapper {
+            padding-bottom: 0;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Tạo hóa đơn mới</h5>
+            </div>
+            <div class="ibox-content p-sm">
+                @using (Html.BeginForm("Create", "Order", FormMethod.Post, new { id = "createForm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @(Html.ValidationSummary(true, "", new { @class = "text-danger" }))
+                        @Html.Partial("_CreateOrEdit", Model)
+                        @Html.Partial("_Toolbar")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_MediaForm")
+
+@section pluginScripts
+{
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/bootstrap-treeview.js"></script>
+    <script src="~/Scripts/bootstrap-combobox.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/framework/bootstrap.min.js"></script>
+    <script src="~/Scripts/custom/file.js"></script>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/admjqueryval")
+    <script>
+        $(function () {
+            $("#createForm")
+            .formValidation({
+                framework: "bootstrap",
+                //icon: {
+                //    valid: "glyphicon glyphicon-ok",
+                //    invalid: "glyphicon glyphicon-remove",
+                //    validating: "glyphicon glyphicon-refresh"
+                //},
+                excluded: ":disabled",
+                fields: {
+                    CustomerId: {
+                        validators: {
+                            notEmpty: {
+                                message: "Chưa chọn khách hàng!"
+                            }//,
+                            //stringLength: {
+                            //    min: 6,
+                            //    max: 30,
+                            //    message: 'The name must be more than 6 and less than 30 characters long'
+                            //}
+                        }
+                    },
+                    MethodofPayment: {
+                        validators: {
+                            notEmpty: {
+                                message: "Chưa chọn phương thức thanh toán!"
+                            }//,
+                            //stringLength: {
+                            //    min: 6,
+                            //    max: 30,
+                            //    message: 'The name must be more than 6 and less than 30 characters long'
+                            //}
+                        }
+                    },
+                    OrderDetailJson: {
+                        validators: {
+                            notEmpty: {
+                                message: "Chưa chọn sản phẩm!"
+                            }//,
+                            //stringLength: {
+                            //    min: 6,
+                            //    max: 30,
+                            //    message: 'The name must be more than 6 and less than 30 characters long'
+                            //}
+                        }
+                    }
+                }
+            });
+            $("#CustomerId").combobox();
+            $(".combobox").combobox();
+
+            var orderDetails = [];
+            $("#createForm").on("click", ".add-product", function () {
+                var div = $(this).closest("div.order-detail");
+                
+            });
+
+            $("#createForm .order-detail").on("change", "input[type=hidden]", function () {
+                var div = $(this).closest("div.order-detail");
+                var method = $("#MethodofPayment").val();
+                var txtPrice = $(div).find(".price").first();
+                if ($(this).val() === "") {
+                    txtPrice.val(0);
+                } else {
+                    var price = $(this).val().split("-");
+                    txtPrice.val(price[method]);
+                }
+
+            });
+
+            $("#tbOrderDetails").DataTable(
+            {
+                "bSort": false,
+                "bPaginate": false,
+                "bFilter": false,
+                "language": {
+                    "lengthMenu": "Số dòng hiển thị _MENU_",
+                    "zeroRecords": "Không có sản phẩm nào",
+                    "info": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    "infoEmpty": "",
+                    "search": "Tìm: ",
+                    "infoFiltered": " ",
+                    "paginate": {
+                        "first": "Đầu",
+                        "previous": "Trước",
+                        "next": "Tiếp",
+                        "last": "Cuối"
+                    }
+                }
+            });
+
+
+        });
+    </script>
+}
+
+@section Popup {
+    <div id="dialog-confirm" title="Thông báo!">
+        <p>
+            <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+            Bạn có chắc chắn xóa không?
+        </p>
+    </div>
+}

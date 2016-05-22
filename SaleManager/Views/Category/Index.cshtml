@@ -1,0 +1,261 @@
+﻿@model PagedList.IPagedList<Category>
+
+@{
+    ViewBag.Title = "Quản lý danh mục";
+}
+
+@section pluginStyles
+{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/AdmGrid.css" rel="stylesheet" />
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Danh sách khách hàng</h5>
+                <div class="ibox-tools">
+                    @if (ViewBag.ParentId != null && ViewBag.ParentId != 0)
+                    {
+                        @(Html.Bootstrap()
+                          .ActionLink("Thêm danh mục", "Create")
+                          .Class("btn btn-primary btn-xs")
+                              .PrependIcon("fa fa-plus")
+                        .RouteValues(new { parentId = ViewBag.ParentId }))
+                    }
+                    else
+                    {
+                        @(Html.Bootstrap()
+                          .ActionLink("Thêm danh mục", "Create")
+                          .Class("btn btn-primary btn-xs")
+                          .PrependIcon("fa fa-plus"))
+                    }
+                </div>
+            </div>
+            <div class="ibox-content p-sm">
+                <!-- Phần hiển thị Form tìm kiếm -->
+                <div class="row">
+                    <div class="col-md-6 m-b-sm">
+
+                        @using (Html.BeginForm("Index", "Category", FormMethod.Get, new { @class = "form-horizontal", role = "search", id = "searchEntity" }))
+                        {
+                            <div class="input-group">
+                                @(Html.TextBox("Keyword", null, new
+                            {
+                                placeholder = "Nhập từ khóa hoặc nội dung cần tìm",
+                                @class = "input-sm form-control"
+                            }))
+
+                                @Html.Hidden("PageSize", (int)ViewBag.CurrentPageSize, new { id = "pageSize" })
+                                @Html.Hidden("Status", (int)ViewBag.CurrentStatus, new { id = "supStatus" })
+                                @Html.Hidden("ParentId", (long)ViewBag.ParentId, new { id = "supStatus" })
+
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                                    @(Html.ActionLink("Bỏ lọc", "Index", null,
+                                          new { @class = "btn btn-sm btn-warning" }))
+                                </span>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="col-md-6 m-b-sm">
+                        @(Html.DropDownList("supStatus", null,
+                              new { @class = "input-sm dropdown-width form-control", id = "statusSelect" }))
+                    </div>
+                </div>
+                <table id="tblCategories" class="table table-responsive table-bordered table-hover tbldata">
+                    <thead>
+                        <tr>
+                            <th width="80px">Mã DM</th>
+                            <th width="150px">Tên danh mục</th>
+                            <th class="hidden-sm hidden-xs">Mô tả</th>
+                            <th width="150px">Danh mục cha</th>
+                            <th width="100px">Trạng thái</th>
+                            <th width="100px"></th>
+                        </tr>
+                    </thead>
+                    @if (Model.Count != 0)
+                    {
+
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @Html.DisplayFor(modelItem => item.CategoryId)
+                                </td>
+
+                                <td>
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </td>
+
+                                <td class="hidden-sm hidden-xs">
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @Html.Raw(item.Description)
+                                </td>
+
+                                <td>
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @Html.DisplayFor(modelItem => item.ParentCategory.CategoryName)
+                                </td>
+                                <td class="td_toggle">
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    <button type="button" class="toggle @(item.Actived.ToString().ToLower())"
+                                            data-toggle-state="true"
+                                            data-url="@Url.Action("UpdateToggle")"
+                                            data-args="Actived_@(item.Actived.ToString().ToLower())_@(item.CategoryId)"></button>
+                                </td>
+                                <td style="text-align: right">
+                                    @if (item.ParentCategoryId == null ||item.ParentCategoryId == 0)
+                                    {
+                                        @(Html.Bootstrap()
+                                          .ActionLink("", "Index", "Category")
+                                          .RouteValues(new { parentId = item.CategoryId })
+                                          .Title("Quản lý công nợ khách hàng")
+                                          .AppendIcon("fa fa-sitemap fa-2x"))
+                                    }
+                                    @(Html.Bootstrap()
+                                          .ActionLink("", "Edit")
+                                          .RouteValues(new {id = item.CategoryId})
+                                          .Title("Cập nhật thông tin khách hàng")
+                                          .AppendIcon("fa fa-pencil fa-2x"))
+                                    @(Html.Bootstrap()
+                                          .ActionLink("", "Delete")
+                                          .RouteValues(new {id = item.CategoryId})
+                                          .Title("Xóa thông tin khách hàng")
+                                          .Class("delete-customer")
+                                          .AppendIcon("fa fa-trash-o fa-2x"))
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="6">Không có danh mục nào</td></tr>
+                    }
+                </table>
+
+                <!-- Phần hiển thị thanh phân trang -->
+                <div class="row">
+                    <div class="col-md-6 m-b-sm text-center">
+                        Hiển thị
+                        @(Html.DropDownList("PageSize", null,
+                              new { @class = "input-sm", id = "pageSelect" }))
+                        mẫu tin
+                    </div>
+                    <div class="col-md-6 text-center">
+                        @Html.PagedListPager(
+                            Model,
+                            page => Url.Action(
+                                "Index",
+                                new
+                                {
+                                    page,
+                                    pageSize = ViewBag.CurrentPageSize,
+                                    keyword = ViewBag.Keyword,
+                                    status = ViewBag.CurrentStatus
+                                }),
+                            PagedListRenderOptions.ClassicPlusFirstAndLast)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hidden">
+    <div id="delete-dialog-confirm" title="Xóa khách hàng">
+        <p id="delete-dialog-text">
+            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+
+        </p>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/custom/index.js"></script>
+    <script>
+        $(function () {
+
+            $("#tblCategories").on("click", "[data-toggle-state=true]", function (e) {
+                var $this = $(this);
+                var url = $this.attr("data-url");
+                var args = $this.attr("data-args");
+                $.post(url,
+                    { "args": args },
+                    function (data) {
+                        if (data.Result) {
+                            $this.attr("data-args", data.Messege);
+                            $this.toggleClass("true");
+                        } else {
+                            alert(data.Message);
+                        }
+                    });
+            });
+
+            $(".delete-customer").on("click", function (e) {
+                e.preventDefault();
+                $("#delete-dialog-text").html("Việc xóa thông tin danh mục sẽ xóa các sản phẩm kèm theo.<br /> Bạn có chắc chắn xóa không?");
+                var url = $(this).attr("href");
+                var tr = $(this).closest("tr");
+                $("#delete-dialog-confirm").dialog({
+                    resizable: false,
+                    draggable: false,
+                    height: 150,
+                    width: 500,
+                    modal: true,
+                    buttons: {
+                        "Xóa khách hàng": function () {
+                            $("#delete-dialog-text").html("Đang xóa. Xin chờ một chút.......");
+                            $("#delete-dialog-confirm").dialog("option", "buttons",
+                            [
+                                {
+                                    text: "Cancel",
+                                    icons: {
+                                        primary: "ui-icon-heart"
+                                    },
+                                    click: function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            ]);
+                            var that = this;
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                success: function (data) {
+                                    if (data.Success) {
+                                        tr.remove();
+                                        var tables = $("#tblCategories tbody").find("tr").length;
+                                        if (tables === 0) {
+                                            window.location.reload(true);
+                                        }
+                                        $(that).dialog("close");
+                                    }
+                                    else {
+                                        $("#delete-dialog-text").html(data.Message);
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert();
+                                    $("#delete-dialog-text").html(xhr.responseText);
+                                }
+                            });
+
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+

@@ -1,0 +1,250 @@
+﻿@model PagedList.IPagedList<Supplier>
+
+@{
+    ViewBag.Title = "Quản lý nhà cung cấp";
+}
+
+@section pluginStyles
+{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/AdmGrid.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Danh sách khách hàng</h5>
+                <div class="ibox-tools">
+                    @(Html.Bootstrap()
+                          .ActionLink("Thêm nhà cung cấp", "Create")
+                          .Class("btn btn-primary btn-xs")
+                          .PrependIcon("fa fa-plus"))
+                </div>
+            </div>
+            <div class="ibox-content p-sm">
+                <!-- Phần hiển thị Form tìm kiếm -->
+                <div class="row">
+                    <div class="col-md-12 m-b-sm">
+
+                        @using (Html.BeginForm("Index", "Supplier", FormMethod.Get, new { @class = "form-horizontal", role = "search", id = "searchEntity" }))
+                        {
+                            <div class="input-group">
+                                @(Html.TextBox("Keyword", null, new
+                            {
+                                placeholder = "Nhập từ khóa hoặc nội dung cần tìm",
+                                @class = "input-sm form-control"
+                            }))
+
+                                @Html.Hidden("PageSize", (int)ViewBag.CurrentPageSize, new { id = "pageSize" })
+
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                                    @(Html.ActionLink("Bỏ lọc", "Index", null,
+                                          new { @class = "btn btn-sm btn-warning" }))
+                                </span>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <table id="tblSupplier" class="table table-responsive table-bordered table-hover tbldata">
+                    <thead>
+                        <tr>
+                            <th>Tên công ty</th>
+                            <th class="hidden-sm hidden-xs">Thông tin liên hệ</th>
+                            <th class="hidden-sm hidden-xs">Thông tin khác</th>
+                            <th width="100px"></th>
+                        </tr>
+                    </thead>
+                    @if (Model.Count != 0)
+                    {
+
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    <strong>@Html.DisplayFor(modelItem => item.SupplierName)</strong>
+                                    <br />
+                                    <small>@Html.Raw(item.Description)</small>
+                                </td>
+
+                                <td class="hidden-sm hidden-xs">
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    Họ tên: @Html.DisplayFor(modelItem => item.ContactName)
+                                    <br />
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    <small>Chức vụ: @Html.DisplayFor(modelItem => item.ContactTitle)</small>
+                                </td>
+
+                                <td class="hidden-sm hidden-xs">
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @if (!string.IsNullOrEmpty(item.Address))
+                                    {
+                                        <i class="fa fa-map-marker fa-2x iSup"></i>
+                                        <span> :</span>
+                                        @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                        @Html.DisplayFor(modelItem => item.Address)
+
+                                        <br />
+                                    }
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @if (!string.IsNullOrEmpty(item.Email))
+                                    {
+                                        <i class="fa fa-envelope-o fa-2x iSup"></i>
+                                        <span> :</span>
+                                        <a href="mailto:@item.Email">@item.Email</a>
+                                        <br />
+                                    }
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @if (!string.IsNullOrEmpty(item.Phone))
+                                    {
+                                        <i class="fa fa-phone fa-2x iSup"></i><span> :</span>
+                                        @Html.DisplayFor(modelItem => item.Phone)
+                                        <br />
+                                    }
+                                    @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                    @if (!string.IsNullOrEmpty(item.Fax))
+                                    {
+                                        <i class="fa fa-fax fa-2x iSup"></i><span> :</span>
+                                        @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                        @Html.DisplayFor(modelItem => item.Fax)
+                                        <br />
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.HomePage))
+                                    {
+                                        <i class="fa fa-home fa-2x iSup"></i><span> :</span>
+                                        @* ReSharper disable once AccessToForEachVariableInClosure *@
+                                        @Html.DisplayFor(modelItem => item.HomePage)
+                                    }
+                                </td>
+
+                                <td>
+                                    @(Html.Bootstrap()
+                                          .ActionLink("", "Edit")
+                                          .RouteValues(new { id = item.SupplierId })
+                                          .Title("Cập nhật")
+                                          .AppendIcon("fa fa-pencil fa-2x"))
+                                    @(Html.Bootstrap()
+                                          .ActionLink("", "Delete")
+                                          .RouteValues(new { id = item.SupplierId })
+                                          .Title("Xóa thông tin nhà cung cấp")
+                                          .Class("delete-customer")
+                                          .AppendIcon("fa fa-trash-o fa-2x"))
+                                    @(Html.Bootstrap()
+                                          .ActionLink("", "Index", "Product")
+                                          .Class("ajax-link")
+                                          .RouteValues(new { suppId = item.SupplierId })
+                                          .AppendIcon("fa fa-gift fa-2x")
+                                          .Title("Xem danh sách sản phẩm"))
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="4">Không có nhà cung cấp nào</td></tr>
+                    }
+                </table>
+
+                <!-- Phần hiển thị thanh phân trang -->
+                <div class="row">
+                    <div class="col-md-6 m-b-sm text-center">
+                        Hiển thị
+                        @(Html.DropDownList("PageSize", null,
+                              new { @class = "input-sm", id = "pageSelect" }))
+                        mẫu tin
+                    </div>
+                    <div class="col-md-6 text-center">
+                        @Html.PagedListPager(
+                            Model,
+                            page => Url.Action(
+                                "Index",
+                                new
+                                {
+                                    page,
+                                    pageSize = ViewBag.CurrentPageSize,
+                                    keyword = ViewBag.Keyword,
+                                    status = ViewBag.CurrentStatus
+                                }),
+                            PagedListRenderOptions.ClassicPlusFirstAndLast)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hidden">
+    <div id="delete-dialog-confirm" title="Xóa khách hàng">
+        <p id="delete-dialog-text">
+            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+        </p>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/custom/index.js"></script>
+    <script>
+        $(function () {
+            $(".delete-customer").on("click", function (e) {
+                e.preventDefault();
+                $("#delete-dialog-text").html("Bạn có chắc chắn xóa không?");
+                var url = $(this).attr("href");
+                var tr = $(this).closest('tr');
+                $("#delete-dialog-confirm").dialog({
+                    resizable: false,
+                    draggable: false,
+                    height: 150,
+                    width: 500,
+                    modal: true,
+                    buttons: {
+                        "Xóa khách hàng": function () {
+                            $("#delete-dialog-text").html("Đang xóa. Xin chờ một chút.......");
+                            $("#delete-dialog-confirm").dialog("option", "buttons",
+                            [
+                                {
+                                    text: "Cancel",
+                                    icons: {
+                                        primary: "ui-icon-heart"
+                                    },
+                                    click: function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            ]);
+                            var that = this;
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                success: function (data) {
+                                    if (data.Success) {
+                                        tr.remove();
+                                        var tables = $("#tblCustomers tbody").find("tr").length;
+                                        if (tables === 0) {
+                                            window.location.reload(true);
+                                        }
+                                        $(that).dialog("close");
+                                    }
+                                    else {
+                                        $("#delete-dialog-text").html(data.Message);
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    $("#delete-dialog-text").html(xhr.responseText);
+                                }
+                            });
+
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

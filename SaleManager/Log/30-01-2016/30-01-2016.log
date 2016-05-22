@@ -1,0 +1,45 @@
+-----------------------------------------------------------
+
+Time: 30/01/2016 9:43:28 SA
+
+
+Action: System.Data.Entity.Internal.InternalContext.SaveChanges
+
+
+Message: An error occurred while updating the entries. See the inner exception for details.
+
+
+-----------------------------------------------------------
+
+
+
+-----------------------------------------------------------
+
+Time: 30/01/2016 9:45:18 SA
+
+
+Action: System.Data.Entity.Internal.InternalContext.SaveChanges
+
+
+Message: An error occurred while updating the entries. See the inner exception for details.
+
+
+-----------------------------------------------------------
+
+
+
+-----------------------------------------------------------
+
+Time: 30/01/2016 10:24:15 SA
+
+
+Action: System.Data.Entity.Internal.InternalContext.SaveChanges
+
+
+Message: An error occurred while updating the entries. See the inner exception for details.
+
+
+-----------------------------------------------------------
+
+
+
